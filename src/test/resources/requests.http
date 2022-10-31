@@ -1,0 +1,72 @@
+### Получение списка сообщений
+
+GET http://localhost:2001/api/duas
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json' but received '" + response.contentType.mimeType + "'");
+});
+%}
+
+### Создание нового сообщения (id = 0)
+
+POST http://localhost:2001/api/duas
+Content-Type: application/json
+
+{
+  "id": 0,
+  "title": "Netology",
+  "content": "New Post"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json' but received '" + response.contentType.mimeType + "'");
+  client.assert(response.body.id === 4, "Generated id not 4");
+});
+%}
+
+### Получение сообщения по id
+
+GET http://localhost:2001/api/duas/4
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json' but received '" + response.contentType.mimeType + "'");
+  client.assert(response.body.id === 4, "id not 4");
+  client.assert(response.body.content === "New Post", "Invalid content");
+});
+%}
+
+### Обновление сообщения (id != 0)
+
+POST http://localhost:2001/api/duas
+Content-Type: application/json
+
+{
+  "id": 3,
+  "title": "Netology 44",
+  "content": "New Post (UPDATED)"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json' but received '" + response.contentType.mimeType + "'");
+  client.assert(response.body.id === 4, "Id changed");
+  client.assert(response.body.content === "New Post (UPDATED)", "Content not updated");
+});
+%}
+
+### Удаление сообщения по id
+
+DELETE http://localhost:2001/api/duas/4
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
