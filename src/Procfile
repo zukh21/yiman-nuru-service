@@ -1,1 +1,1 @@
-web: kotlin -jar build/libs/Yiman-Nuru-Service-0.0.1-SNAPSHOT.jar
+web: java -jar build/libs/Yiman-Nuru-Service-0.0.1-SNAPSHOT.jar
